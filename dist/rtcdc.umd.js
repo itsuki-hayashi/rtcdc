@@ -5668,12 +5668,13 @@
    * @param ms - Time to sleep in milliseconds.
    */
   function wait() {
-      return sleep(1);
+      return sleep(128);
   }
 
   class DataChannel {
       constructor(rtcDataChannel) {
           this.rtcDataChannel = rtcDataChannel;
+          this.label = rtcDataChannel.label;
           this.messages = fromEvent(rtcDataChannel, 'message')
               .pipe(map((event) => event.data));
       }
@@ -5682,6 +5683,7 @@
               while (this.rtcDataChannel.readyState !== 'open') {
                   await wait();
               }
+              // tslint:disable-next-line: no-any // Does not compile with union type.
               this.rtcDataChannel.send(data);
               resolve();
           });

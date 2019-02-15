@@ -12,5 +12,5 @@ export function sleep(ms: number): Promise<void> {
  * @param ms - Time to sleep in milliseconds.
  */
 export function wait(): Promise<void> {
-  return sleep(1);
+  return sleep(128);
 }
