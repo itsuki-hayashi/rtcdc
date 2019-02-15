@@ -2,7 +2,9 @@
   "name": "rtcdc",
   "version": "0.0.1",
   "description": "A modernized wrapper for WebRTC data channels.",
-  "main": "index.js",
+  "main": "dist/rtcdc.cjs.js",
+  "module": "dist/rtcdc.esm.js",
+  "browser": "dist/rtcdc.umd.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "check": "gts check",
@@ -27,9 +29,14 @@
   },
   "homepage": "https://github.com/edsgerlin/rtcdc#readme",
   "devDependencies": {
+    "gts": "~0.9.0",
+    "rollup": "~1.1.2",
+    "rollup-plugin-commonjs": "~9.2.0",
+    "rollup-plugin-node-resolve": "~4.0.0",
+    "rollup-plugin-typescript": "~1.0.0",
+    "tslib": "~1.9.3",
     "tslint": "~5.12.1",
-    "typescript": "~3.3.3",
-    "gts": "~0.9.0"
+    "typescript": "~3.3.3"
   },
   "dependencies": {
     "rxjs": "~6.4.0"
