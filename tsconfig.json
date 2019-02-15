@@ -2,9 +2,11 @@
     "extends": "./node_modules/gts/tsconfig-google.json",
     "compilerOptions": {
         "rootDir": ".",
-        "outDir": "build",
+        "outDir": "dist",
         "lib": ["es2018", "dom"],
         "target": "es2018",
+        "module": "es2015",
+        "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
         "strict": true,
         "alwaysStrict": true,

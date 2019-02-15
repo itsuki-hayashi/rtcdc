@@ -1,12 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const constants_1 = require("./constants");
-const data_channel_1 = require("./data.channel");
-const sdp_participant_1 = require("./sdp.participant");
-class SDPOfferer extends sdp_participant_1.SDPParticipant {
+import { DATA_CHANNEL_LABEL, RTC_OFFER_OPTIONS } from './constants';
+import { DataChannel } from './data.channel';
+import { SDPParticipant } from './sdp.participant';
+export class SDPOfferer extends SDPParticipant {
     constructor() {
         super();
-        this.dataChannel = new data_channel_1.DataChannel(this.peerConnection.createDataChannel(constants_1.DATA_CHANNEL_LABEL));
+        this.dataChannel = new DataChannel(this.peerConnection.createDataChannel(DATA_CHANNEL_LABEL));
     }
     async getDataChannel() {
         return this.dataChannel;
@@ -19,7 +17,7 @@ class SDPOfferer extends sdp_participant_1.SDPParticipant {
                     resolve(this.peerConnection.localDescription);
                 }
             });
-            const sessionDescription = await this.peerConnection.createOffer(constants_1.RTC_OFFER_OPTIONS);
+            const sessionDescription = await this.peerConnection.createOffer(RTC_OFFER_OPTIONS);
             this.peerConnection.setLocalDescription(sessionDescription); // Ice Gathering starts here.
         });
     }
@@ -27,5 +25,4 @@ class SDPOfferer extends sdp_participant_1.SDPParticipant {
         return this.peerConnection.setRemoteDescription(remoteDescription);
     }
 }
-exports.SDPOfferer = SDPOfferer;
 //# sourceMappingURL=sdp.offerer.js.map

@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.RTC_CONFIG = {
+export const RTC_CONFIG = {
     iceCandidatePoolSize: 255,
     iceServers: [
         {
@@ -10,11 +8,11 @@ exports.RTC_CONFIG = {
         },
     ],
 };
-exports.RTC_OFFER_OPTIONS = {
+export const RTC_OFFER_OPTIONS = {
     iceRestart: false,
     offerToReceiveAudio: false,
     offerToReceiveVideo: false,
     voiceActivityDetection: false,
 };
-exports.DATA_CHANNEL_LABEL = 'data_channel';
+export const DATA_CHANNEL_LABEL = 'data_channel';
 //# sourceMappingURL=constants.js.map

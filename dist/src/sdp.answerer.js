@@ -1,16 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const rxjs_1 = require("rxjs");
-const operators_1 = require("rxjs/operators");
-const constants_1 = require("./constants");
-const data_channel_1 = require("./data.channel");
-const sdp_participant_1 = require("./sdp.participant");
-class SDPAnswerer extends sdp_participant_1.SDPParticipant {
+import { fromEvent } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { RTC_OFFER_OPTIONS } from './constants';
+import { DataChannel } from './data.channel';
+import { SDPParticipant } from './sdp.participant';
+export class SDPAnswerer extends SDPParticipant {
     constructor() {
         super();
         this.attachedDataChannel =
-            rxjs_1.fromEvent(this.peerConnection, 'datachannel')
-                .pipe(operators_1.map((event) => new data_channel_1.DataChannel(event.channel)));
+            fromEvent(this.peerConnection, 'datachannel')
+                .pipe(map((event) => new DataChannel(event.channel)));
     }
     async getDataChannel() {
         return new Promise((resolve) => {
@@ -28,9 +26,8 @@ class SDPAnswerer extends sdp_participant_1.SDPParticipant {
                 }
             });
             await this.peerConnection.setRemoteDescription(remoteDescription);
-            this.peerConnection.setLocalDescription(await this.peerConnection.createAnswer(constants_1.RTC_OFFER_OPTIONS));
+            this.peerConnection.setLocalDescription(await this.peerConnection.createAnswer(RTC_OFFER_OPTIONS));
         });
     }
 }
-exports.SDPAnswerer = SDPAnswerer;
 //# sourceMappingURL=sdp.answerer.js.map
