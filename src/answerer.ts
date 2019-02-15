@@ -1,12 +1,12 @@
 import {fromEvent, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {RTC_OFFER_OPTIONS} from './constants';
+import {DEFAULT_RTC_OFFER_OPTIONS} from './constants';
 import {DataChannel} from './data.channel';
-import {SDPParticipant} from './sdp.participant';
-export class SDPAnswerer extends SDPParticipant {
+import {Participant} from './participant';
+export class Answerer extends Participant {
   private readonly attachedDataChannel: Observable<DataChannel>;
-  constructor() {
-    super();
+  constructor(config?: RTCConfiguration) {
+    super(config);
     this.attachedDataChannel =
         fromEvent<RTCDataChannelEvent>(this.peerConnection, 'datachannel')
             .pipe(map((event) => new DataChannel(event.channel)));
@@ -29,7 +29,7 @@ export class SDPAnswerer extends SDPParticipant {
       });
       await this.peerConnection.setRemoteDescription(remoteDescription);
       this.peerConnection.setLocalDescription(
-          await this.peerConnection.createAnswer(RTC_OFFER_OPTIONS));
+          await this.peerConnection.createAnswer(DEFAULT_RTC_OFFER_OPTIONS));
     });
   }
 }

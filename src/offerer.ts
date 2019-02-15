@@ -1,14 +1,20 @@
-import {DATA_CHANNEL_LABEL, RTC_OFFER_OPTIONS} from './constants';
+import {DEFAULT_DATA_CHANNEL_LABEL, DEFAULT_RTC_OFFER_OPTIONS} from './constants';
 import {DataChannel} from './data.channel';
-import {SDPParticipant} from './sdp.participant';
+import {OffererConfiguration} from './offerer.configuration';
+import {Participant} from './participant';
 
-export class SDPOfferer extends SDPParticipant {
+export class Offerer extends Participant {
   private readonly dataChannel: DataChannel;
 
-  constructor() {
-    super();
+  constructor(
+      config?: OffererConfiguration,
+  ) {
+    super(config);
+    const dataChannelLabel = config && config.dataChannelLabel ?
+        config.dataChannelLabel :
+        DEFAULT_DATA_CHANNEL_LABEL;
     this.dataChannel = new DataChannel(
-        this.peerConnection.createDataChannel(DATA_CHANNEL_LABEL));
+        this.peerConnection.createDataChannel(dataChannelLabel));
   }
   async getDataChannel(): Promise<DataChannel> {
     return this.dataChannel;
@@ -22,7 +28,7 @@ export class SDPOfferer extends SDPParticipant {
         }
       });
       const sessionDescription =
-          await this.peerConnection.createOffer(RTC_OFFER_OPTIONS);
+          await this.peerConnection.createOffer(DEFAULT_RTC_OFFER_OPTIONS);
       this.peerConnection.setLocalDescription(
           sessionDescription);  // Ice Gathering starts here.
     });

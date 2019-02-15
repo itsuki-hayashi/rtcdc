@@ -1,4 +1,4 @@
-export const RTC_CONFIG: RTCConfiguration = {
+export const DEFAULT_RTC_CONFIG: RTCConfiguration = {
   iceCandidatePoolSize: 255,
   iceServers: [
     {
@@ -9,11 +9,11 @@ export const RTC_CONFIG: RTCConfiguration = {
   ],
 };
 
-export const RTC_OFFER_OPTIONS: RTCOfferOptions = {
+export const DEFAULT_RTC_OFFER_OPTIONS: RTCOfferOptions = {
   iceRestart: false,
   offerToReceiveAudio: false,
   offerToReceiveVideo: false,
   voiceActivityDetection: false,
 };
 
-export const DATA_CHANNEL_LABEL = 'data_channel';
+export const DEFAULT_DATA_CHANNEL_LABEL = 'data_channel';

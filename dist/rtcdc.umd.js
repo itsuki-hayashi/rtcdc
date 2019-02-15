@@ -4,7 +4,7 @@
   (global = global || self, factory(global.rtcdc = {}));
 }(this, function (exports) { 'use strict';
 
-  const RTC_CONFIG = {
+  const DEFAULT_RTC_CONFIG = {
       iceCandidatePoolSize: 255,
       iceServers: [
           {
@@ -14,13 +14,13 @@
           },
       ],
   };
-  const RTC_OFFER_OPTIONS = {
+  const DEFAULT_RTC_OFFER_OPTIONS = {
       iceRestart: false,
       offerToReceiveAudio: false,
       offerToReceiveVideo: false,
       voiceActivityDetection: false,
   };
-  const DATA_CHANNEL_LABEL = 'data_channel';
+  const DEFAULT_DATA_CHANNEL_LABEL = 'data_channel';
 
   /*! *****************************************************************************
   Copyright (c) Microsoft Corporation. All rights reserved.
@@ -5688,18 +5688,21 @@
       }
   }
 
-  class SDPParticipant {
-      constructor() {
-          this.peerConnection = new RTCPeerConnection(RTC_CONFIG);
+  class Participant {
+      constructor(config$$1) {
+          this.peerConnection = new RTCPeerConnection(config$$1 !== undefined ? config$$1 : DEFAULT_RTC_CONFIG);
           this.iceCandidates = fromEvent(this.peerConnection, 'icecandidate')
               .pipe(map((event) => event.candidate));
       }
   }
 
-  class SDPOfferer extends SDPParticipant {
-      constructor() {
-          super();
-          this.dataChannel = new DataChannel(this.peerConnection.createDataChannel(DATA_CHANNEL_LABEL));
+  class Offerer extends Participant {
+      constructor(config) {
+          super(config);
+          const dataChannelLabel = config && config.dataChannelLabel ?
+              config.dataChannelLabel :
+              DEFAULT_DATA_CHANNEL_LABEL;
+          this.dataChannel = new DataChannel(this.peerConnection.createDataChannel(dataChannelLabel));
       }
       async getDataChannel() {
           return this.dataChannel;
@@ -5712,7 +5715,7 @@
                       resolve(this.peerConnection.localDescription);
                   }
               });
-              const sessionDescription = await this.peerConnection.createOffer(RTC_OFFER_OPTIONS);
+              const sessionDescription = await this.peerConnection.createOffer(DEFAULT_RTC_OFFER_OPTIONS);
               this.peerConnection.setLocalDescription(sessionDescription); // Ice Gathering starts here.
           });
       }
@@ -5721,9 +5724,9 @@
       }
   }
 
-  class SDPAnswerer extends SDPParticipant {
-      constructor() {
-          super();
+  class Answerer extends Participant {
+      constructor(config$$1) {
+          super(config$$1);
           this.attachedDataChannel =
               fromEvent(this.peerConnection, 'datachannel')
                   .pipe(map((event) => new DataChannel(event.channel)));
@@ -5744,13 +5747,13 @@
                   }
               });
               await this.peerConnection.setRemoteDescription(remoteDescription);
-              this.peerConnection.setLocalDescription(await this.peerConnection.createAnswer(RTC_OFFER_OPTIONS));
+              this.peerConnection.setLocalDescription(await this.peerConnection.createAnswer(DEFAULT_RTC_OFFER_OPTIONS));
           });
       }
   }
 
-  exports.SDPOfferer = SDPOfferer;
-  exports.SDPAnswerer = SDPAnswerer;
+  exports.Offerer = Offerer;
+  exports.Answerer = Answerer;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

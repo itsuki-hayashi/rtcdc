@@ -1,8 +1,9 @@
 import { DataChannel } from './data.channel';
-import { SDPParticipant } from './sdp.participant';
-export declare class SDPOfferer extends SDPParticipant {
+import { OffererConfiguration } from './offerer.configuration';
+import { Participant } from './participant';
+export declare class Offerer extends Participant {
     private readonly dataChannel;
-    constructor(dataChannelLabel?: string, config?: RTCConfiguration);
+    constructor(config?: OffererConfiguration);
     getDataChannel(): Promise<DataChannel>;
     createOffer(): Promise<RTCSessionDescription>;
     setAnswer(remoteDescription: RTCSessionDescription): Promise<void>;

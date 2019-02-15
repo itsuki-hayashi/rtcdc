@@ -1,2 +1,2 @@
-export * from './sdp.offerer';
-export * from './sdp.answerer';
+export * from './offerer';
+export * from './answerer';

@@ -1,6 +1,6 @@
 import { DataChannel } from './data.channel';
-import { SDPParticipant } from './sdp.participant';
-export declare class SDPAnswerer extends SDPParticipant {
+import { Participant } from './participant';
+export declare class Answerer extends Participant {
     private readonly attachedDataChannel;
     constructor(config?: RTCConfiguration);
     getDataChannel(): Promise<DataChannel>;
