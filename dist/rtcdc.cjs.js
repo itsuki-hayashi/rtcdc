@@ -2,24 +2,6 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-const DEFAULT_RTC_CONFIG = {
-    iceCandidatePoolSize: 255,
-    iceServers: [
-        {
-            urls: [
-                'stun:stun.l.google.com:19302',
-            ],
-        },
-    ],
-};
-const DEFAULT_RTC_OFFER_OPTIONS = {
-    iceRestart: false,
-    offerToReceiveAudio: false,
-    offerToReceiveVideo: false,
-    voiceActivityDetection: false,
-};
-const DEFAULT_DATA_CHANNEL_LABEL = 'data_channel';
-
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -5654,6 +5636,24 @@ var WithLatestFromSubscriber = /*@__PURE__*/ (function (_super) {
 
 /** PURE_IMPORTS_START  PURE_IMPORTS_END */
 
+const DEFAULT_RTC_CONFIG = {
+    iceCandidatePoolSize: 255,
+    iceServers: [
+        {
+            urls: [
+                'stun:stun.l.google.com:19302',
+            ],
+        },
+    ],
+};
+const DEFAULT_RTC_OFFER_OPTIONS = {
+    iceRestart: false,
+    offerToReceiveAudio: false,
+    offerToReceiveVideo: false,
+    voiceActivityDetection: false,
+};
+const DEFAULT_DATA_CHANNEL_LABEL = 'data_channel';
+
 /**
  * Sleep for given time.
  * @param ms - Time to sleep in milliseconds.
@@ -5696,34 +5696,6 @@ class Participant {
     }
 }
 
-class Offerer extends Participant {
-    constructor(config) {
-        super(config);
-        const dataChannelLabel = config && config.dataChannelLabel ?
-            config.dataChannelLabel :
-            DEFAULT_DATA_CHANNEL_LABEL;
-        this.dataChannel = new DataChannel(this.peerConnection.createDataChannel(dataChannelLabel));
-    }
-    async getDataChannel() {
-        return this.dataChannel;
-    }
-    async createOffer() {
-        return new Promise(async (resolve) => {
-            this.iceCandidates.subscribe((candidate) => {
-                if (candidate === null &&
-                    this.peerConnection.localDescription !== null) {
-                    resolve(this.peerConnection.localDescription);
-                }
-            });
-            const sessionDescription = await this.peerConnection.createOffer(DEFAULT_RTC_OFFER_OPTIONS);
-            this.peerConnection.setLocalDescription(sessionDescription); // Ice Gathering starts here.
-        });
-    }
-    async setAnswer(remoteDescription) {
-        return this.peerConnection.setRemoteDescription(remoteDescription);
-    }
-}
-
 class Answerer extends Participant {
     constructor(config$$1) {
         super(config$$1);
@@ -5752,5 +5724,34 @@ class Answerer extends Participant {
     }
 }
 
-exports.Offerer = Offerer;
+class Offerer extends Participant {
+    constructor(config) {
+        super(config);
+        const dataChannelLabel = config && config.dataChannelLabel ?
+            config.dataChannelLabel :
+            DEFAULT_DATA_CHANNEL_LABEL;
+        this.dataChannel = new DataChannel(this.peerConnection.createDataChannel(dataChannelLabel));
+    }
+    async getDataChannel() {
+        return this.dataChannel;
+    }
+    async createOffer() {
+        return new Promise(async (resolve) => {
+            this.iceCandidates.subscribe((candidate) => {
+                if (candidate === null &&
+                    this.peerConnection.localDescription !== null) {
+                    resolve(this.peerConnection.localDescription);
+                }
+            });
+            const sessionDescription = await this.peerConnection.createOffer(DEFAULT_RTC_OFFER_OPTIONS);
+            this.peerConnection.setLocalDescription(sessionDescription); // Ice Gathering starts here.
+        });
+    }
+    async setAnswer(remoteDescription) {
+        return this.peerConnection.setRemoteDescription(remoteDescription);
+    }
+}
+
 exports.Answerer = Answerer;
+exports.DataChannel = DataChannel;
+exports.Offerer = Offerer;

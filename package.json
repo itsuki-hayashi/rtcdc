@@ -1,6 +1,6 @@
 {
   "name": "rtcdc",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A modernized wrapper for WebRTC data channels.",
   "main": "dist/rtcdc.cjs.js",
   "module": "dist/rtcdc.esm.js",
@@ -23,7 +23,7 @@
     "url": "git+https://github.com/edsgerlin/rtcdc.git"
   },
   "keywords": [
-    "webrtc"
+    "webrtc", "datachannel", "realtime-messaging", "rtc", "realtime", "messaging"
   ],
   "author": "Zhiyuan Lin <zhiyuan@lin.codes>",
   "license": "MIT",
