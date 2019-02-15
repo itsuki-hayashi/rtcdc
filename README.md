@@ -1,2 +1,2 @@
 # rtcdc
-Modernized wrapper for WebRTC data channels.
+A modernized wrapper for WebRTC data channels.

@@ -1,0 +1,34 @@
+{
+  "name": "rtcdc",
+  "version": "0.0.1",
+  "description": "A modernized wrapper for WebRTC data channels.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edsgerlin/rtcdc.git"
+  },
+  "keywords": [
+    "webrtc"
+  ],
+  "author": "Zhiyuan Lin <zhiyuan@lin.codes>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edsgerlin/rtcdc/issues"
+  },
+  "homepage": "https://github.com/edsgerlin/rtcdc#readme",
+  "devDependencies": {
+    "tslint": "~5.12.1",
+    "typescript": "~3.3.3",
+    "gts": "~0.9.0"
+  }
+}
