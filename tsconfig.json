@@ -1,7 +1,7 @@
 {
     "extends": "./node_modules/gts/tsconfig-google.json",
     "compilerOptions": {
-        "rootDir": ".",
+        "rootDir": "src",
         "outDir": "dist",
         "lib": ["es2018", "dom"],
         "target": "es2018",
@@ -13,6 +13,9 @@
         "noImplicitAny": true,
         "noImplicitThis": true,
         "noImplicitReturns": true,
+        "declaration": true,
+        "declarationDir": "types",
+        "emitDeclarationOnly": true,
     },
     "include": [
         "src/*.ts",

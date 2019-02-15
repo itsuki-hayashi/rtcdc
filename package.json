@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "check": "gts check",
     "clean": "gts clean",
-    "compile": "tsc -p .",
+    "compile": "tsc -p . && rollup -c",
     "fix": "gts fix",
     "prepare": "npm run compile",
     "pretest": "npm run compile",
@@ -40,5 +40,6 @@
   },
   "dependencies": {
     "rxjs": "~6.4.0"
-  }
+  },
+  "types": "types/index.d.ts"
 }
